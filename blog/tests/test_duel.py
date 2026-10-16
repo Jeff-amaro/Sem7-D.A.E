@@ -23,12 +23,10 @@ class DuelTests(TestCase):
     def test_reference_solutions_are_all_correct_and_cheap(self):
         self.assertEqual(set(self.statuses("solutions").values()), {"ok"})
 
-    def test_every_written_team_answer_is_correct_and_cheap(self):
-        # The starter checked that team.py was still empty ({"todo"}). Now that
-        # the team has written its answers, whatever is written must already be
-        # correct and cheap; the rest may still be pending.
-        for verdict in run_all("team"):
-            self.assertIn(verdict.status, {"ok", "todo"}, verdict.key)
+    def test_the_team_answers_are_all_correct_and_cheap(self):
+        # The starter checked that team.py was still empty ({"todo"}); now that
+        # the eight answers are written, all of them must stay correct and cheap.
+        self.assertEqual(set(self.statuses("team").values()), {"ok"})
 
     def test_the_assistant_fails_where_the_lab_says(self):
         self.assertEqual(
