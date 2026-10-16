@@ -10,31 +10,31 @@ filter. Check yourself with:
 Question 5 asks for two numbers per post: annotate them as `n_comments` and
 `n_tags`.
 """
-from datetime import date  # noqa: F401  (you will need it in question 3)
+from datetime import date
 
-from django.db.models import Count, Q  # noqa: F401
+from django.db.models import Count
 
-from blog.models import Author, Category, Comment, Post, Profile, Tag  # noqa: F401
+from blog.models import Author, Comment, Post
 
 
 def q1():
     """Los artículos que ya están publicados."""
-    raise NotImplementedError
+    return Post.objects.filter(published=True)
 
 
 def q2():
     """Los artículos que no tienen categoría asignada."""
-    raise NotImplementedError
+    return Post.objects.filter(category__isnull=True)
 
 
 def q3():
     """Los artículos publicados entre el 1 de marzo y el 31 de mayo de 2026, ambos días incluidos."""
-    raise NotImplementedError
+    return Post.objects.filter(published_at__range=(date(2026, 3, 1), date(2026, 5, 31)))
 
 
 def q4():
     """Los artículos con más de dos comentarios."""
-    raise NotImplementedError
+    return Post.objects.annotate(n_comments=Count("comments")).filter(n_comments__gt=2)
 
 
 def q5():
